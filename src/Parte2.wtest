@@ -1,0 +1,6 @@
+
+describe "testX" {
+
+	assert.that(true)
+
+}

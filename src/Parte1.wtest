@@ -1,0 +1,34 @@
+import Marcas.*
+import Personas.*
+import paises.*
+import Jarra.*
+
+describe "primera parte" {
+
+	const hofbrau = new CervezaRoja(lupulos = 3.2, paisDeOrigen = alemania)
+	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau)
+	const personaBelga = new PersonaBelga(peso = 100, jarras = [ jarra1, jarra1, jarra1 ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
+
+	method initialize() {
+		graduacionReglamentaria.graduacionReglamentaria(10)
+	}
+
+	test "contenido de alcohol jarra1" {
+		assert.equals(0.04, jarra1.contenidoAlcohol())
+	}
+
+	test "total de alcohol" {
+		assert.equals(0.12, personaBelga.totalAlcoholIngerido()
+		)
+	}
+
+	test "el Belga  esta ebrio" { // 12>8
+		assert.that(personaBelga.estaEbria())
+	}
+
+	test "al belga no le gusta la cerveza hofbrau" { // l=3.2 > 4
+		assert.notThat(personaBelga.leGusta(hofbrau))
+	}
+
+}
+
