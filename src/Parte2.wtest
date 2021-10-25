@@ -1,6 +1,93 @@
+import Marcas.*
+import Personas.*
+import paises.*
+import Jarra.*
+import Carpas.*
 
 describe "testX" {
-
-	assert.that(true)
-
+	const hofbrau = new CervezaRoja(lupulos = 3.2, paisDeOrigen = alemania)
+	const corona = new CervezaRubia(lupulos = 4, paisDeOrigen = repCheca, graduacionRubia = 5)
+	const guinness = new CervezaNegra(lupulos = 5, paisDeOrigen = belga)
+	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau, seSirvio ="")
+	const personaBelga = new PersonaBelga(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
+	const personaAlemana = new PersonaAlemana(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
+	const personaCheca = new PersonaCheca(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
+	const carpaHofbrau = new Carpa(limiteGente= 2, tieneMusica=true,marca = hofbrau)
+	const carpaCorona = new Carpa(limiteGente= 1, tieneMusica=true,marca = corona)
+	const carpaGuinness = new Carpa(limiteGente= 10, tieneMusica=true,marca = guinness)
+	method initialize() {
+		graduacionReglamentaria.graduacionReglamentaria(10)
+	}
+	method canillaLibreParaBelga(){
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+	}
+	test "persona que quiere entrar"{
+		assert.that(personaAlemana.quiereEntrarA(carpaHofbrau))
+	}
+	test "ingresar a una Carpa"{
+		personaCheca.ingresarACarpa(carpaGuinness)
+		assert.that(carpaGuinness.personasDentro().contains(personaCheca))
+	}
+	test "puede entrar a carpa"{
+		assert.that(personaCheca.puedeEntrar(carpaGuinness))
+	}
+	test "vender una jarra a persona"{
+		personaCheca.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaCheca)
+		assert.that(personaCheca.carpasDondeCompro().contains(carpaGuinness))
+	}
+	test "ebrios empedernidos"{
+		assert.equals(carpaGuinness.cantEbriosEmpedernidos(), 0)
+		self.canillaLibreParaBelga()
+		assert.equals(carpaGuinness.cantEbriosEmpedernidos(), 1)
+	}
+	test "es patriota"{
+		self.canillaLibreParaBelga()
+		assert.that(personaCheca.esPatriota())
+	}
+	test " son compatibles"{
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		personaCheca.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaCheca)
+		assert.that(personaCheca.esCompatibleCon(personaBelga))
+	}
+	test "son incompatibles"{
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		assert.notThat(personaCheca.esCompatibleCon(personaBelga))
+	}
+	test "no es homogenea"{
+		personaBelga.ingresarACarpa(carpaGuinness)
+		personaCheca.ingresarACarpa(carpaGuinness)
+		personaAlemana.ingresarACarpa(carpaGuinness)
+		assert.notThat(carpaGuinness.esHomogenea())
+	}
+	test "se sirvio de la carpa"{
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		assert.equals(personaBelga.carpasDondeCompro(),#{carpaGuinness})
+	}
+	test "personas a las que no se le sirvio"{
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		personaCheca.ingresarACarpa(carpaGuinness)
+		personaAlemana.ingresarACarpa(carpaGuinness)
+		assert.equals(carpaGuinness.personasSinCervezaDeAca(),[personaCheca, personaAlemana])
+	}
+	test" entrando en vicio"{
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		carpaGuinness.venderJarraDe_A_(1.5, personaBelga)
+		carpaGuinness.venderJarraDe_A_(5, personaBelga)
+		assert.that(personaBelga.estaEntrandoEnVicio())
+		carpaGuinness.venderJarraDe_A_(4, personaBelga)
+		assert.notThat(personaBelga.estaEntrandoEnVicio())
+	}
 }

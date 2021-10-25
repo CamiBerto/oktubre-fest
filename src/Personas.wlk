@@ -38,6 +38,28 @@ class Persona{
 		return jarras.all{jarra => jarra.marca().paisDeOrigen() == self.nacionalidad()}
 	}
 	method nacionalidad()
+	method marcasCompradas(){
+		return jarras.map({jarra => jarra.marca()}).asSet()
+	}
+	method comprasEnComunCon(unaPersona){
+		return self.marcasCompradas().intersection(unaPersona.marcasCompradas())
+	}
+	method comprasDiferentesCon(unaPersona){
+		return self.marcasCompradas().difference(unaPersona.marcasCompradas()) +
+			   unaPersona.marcasCompradas().difference(self.marcasCompradas())
+	}
+	method carpasDondeCompro(){
+		return jarras.map({jarra => jarra.seSirvio()}).asSet()
+	}
+	method esCompatibleCon(unaPersona) {
+		return self.comprasEnComunCon(unaPersona).size() > self.comprasDiferentesCon(unaPersona).size()
+	}
+	method indiceDeJarras(){
+		return (1..jarras.size()-1).asList()
+	}
+	method estaEntrandoEnVicio() {
+		return self.indiceDeJarras().all{ i => self.jarras().get(i - 1).litro() <= self.jarras().get(i).litro() }
+	}
 }
 
 class PersonaBelga inherits Persona{
@@ -47,14 +69,14 @@ class PersonaBelga inherits Persona{
 	}
 }
 
-class PersonaAleman inherits Persona{
+class PersonaAlemana inherits Persona{
 	override method nacionalidad() = alemania
 	override method quiereEntrarA(unaCarpa){
 		return super(unaCarpa) && unaCarpa.personasDentro().size().even()
 	}
 }
 
-class PersonaCheco inherits Persona{
+class PersonaCheca inherits Persona{
 	override method nacionalidad() = repCheca
 	override method leGusta(marca){
 		return marca.graduacion() > 8
