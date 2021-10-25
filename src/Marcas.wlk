@@ -8,13 +8,13 @@ class Marca{
 class CervezaRubia inherits Marca{
 	var property graduacionRubia
 	override method graduacion(){
-		return self.graduacionRubia()
+		return graduacionRubia
 	}
 }
 
 class CervezaNegra inherits Marca {
 	override method graduacion(){
-		return graduacionReglamentaria.graduacionReglamentaria().min(self.lupulos()*2)
+		return graduacionReglamentaria.graduacionReglamentaria().min(lupulos*2)
 	}
 }
 

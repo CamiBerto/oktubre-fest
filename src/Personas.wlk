@@ -6,7 +6,7 @@ class Persona{
 	var property leGustaMusicaTradicional
 	var property nivelDeAguante
 	method estaEbria(){
-		return self.totalAlcoholIngerido() * self.peso() > self.nivelDeAguante()
+		return self.totalAlcoholIngerido() * peso > nivelDeAguante
 	}
 	method totalAlcoholIngerido(){
 		return jarras.sum{jarra=>jarra.contenidoAlcohol()}
@@ -20,13 +20,10 @@ class Persona{
 	}
 	method ingresarACarpa(unaCarpa){
 		if (self.puedeEntrar(unaCarpa) && not unaCarpa.estaLaPersona(self)) {
-			self.entrarA(unaCarpa)
+			unaCarpa.personasDentro().add(self)
 		} else {
 			self.error("no puede entrar")
 		}
-	}
-	method entrarA(unaCarpa){
-		unaCarpa.personasDentro().add(self)
 	}
 	method comprarJarra(unaJarra){
 		jarras.add(unaJarra)
@@ -58,7 +55,7 @@ class Persona{
 		return (1..jarras.size()-1).asList()
 	}
 	method estaEntrandoEnVicio() {
-		return self.indiceDeJarras().all{ i => self.jarras().get(i - 1).litro() <= self.jarras().get(i).litro() }
+		return self.indiceDeJarras().all{ i => jarras.get(i - 1).litro() <= jarras.get(i).litro() }
 	}
 }
 

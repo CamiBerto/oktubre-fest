@@ -8,7 +8,7 @@ describe "testX" {
 	const hofbrau = new CervezaRoja(lupulos = 3.2, paisDeOrigen = alemania)
 	const corona = new CervezaRubia(lupulos = 4, paisDeOrigen = repCheca, graduacionRubia = 5)
 	const guinness = new CervezaNegra(lupulos = 5, paisDeOrigen = belga)
-	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau, seSirvio ="")
+	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau)
 	const personaBelga = new PersonaBelga(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
 	const personaAlemana = new PersonaAlemana(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
 	const personaCheca = new PersonaCheca(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
