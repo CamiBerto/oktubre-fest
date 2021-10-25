@@ -6,7 +6,7 @@ import Jarra.*
 describe "primera parte" {
 
 	const hofbrau = new CervezaRoja(lupulos = 3.2, paisDeOrigen = alemania)
-	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau, seSirvio ="")
+	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau)
 	const personaBelga = new PersonaBelga(peso = 100, jarras = [ jarra1, jarra1, jarra1 ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
 
 	method initialize() {
