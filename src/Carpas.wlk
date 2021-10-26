@@ -54,6 +54,6 @@ object recargoXCantidad{
 
 object recargoXEbriedad{
 	method recargo(pers, lim){
-		return if ((100 /pers.size()) * pers.count({c => c.estaEbria()}) >= 0.75) {0.50} else {0.20}
+		return if ((100 /pers.size()) * pers.count({c => c.estaEbria()}) >= 75) {0.50} else {0.20}
 	}
 }
