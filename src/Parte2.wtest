@@ -5,16 +5,16 @@ import Jarra.*
 import Carpas.*
 
 describe "testX" {
-	const hofbrau = new CervezaRoja(lupulos = 3.2, paisDeOrigen = alemania)
-	const corona = new CervezaRubia(lupulos = 4, paisDeOrigen = repCheca, graduacionRubia = 5)
-	const guinness = new CervezaNegra(lupulos = 5, paisDeOrigen = belga)
+	const hofbrau = new CervezaRoja(lupulos = 3.2, paisDeOrigen = alemania, precioXLitro = 75)
+	const corona = new CervezaRubia(lupulos = 4, paisDeOrigen = repCheca, graduacionRubia = 9, precioXLitro = 50)
+	const guinness = new CervezaNegra(lupulos = 5, paisDeOrigen = belga, precioXLitro = 70)
 	const jarra1 = new Jarra(litro = 0.5, marca = hofbrau)
 	const personaBelga = new PersonaBelga(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
 	const personaAlemana = new PersonaAlemana(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
 	const personaCheca = new PersonaCheca(peso = 100, jarras = [ ], nivelDeAguante = 8, leGustaMusicaTradicional = true)
-	const carpaHofbrau = new Carpa(limiteGente= 2, tieneMusica=true,marca = hofbrau)
-	const carpaCorona = new Carpa(limiteGente= 1, tieneMusica=true,marca = corona)
-	const carpaGuinness = new Carpa(limiteGente= 10, tieneMusica=true,marca = guinness)
+	const carpaHofbrau = new Carpa(limiteGente= 2, tieneMusica=true,marca = hofbrau, recargoHabilitado = regargoFijo)
+	const carpaCorona = new Carpa(limiteGente= 1, tieneMusica=true,marca = corona, recargoHabilitado = recargoXCantidad)
+	const carpaGuinness = new Carpa(limiteGente= 10, tieneMusica=true,marca = guinness, recargoHabilitado = recargoXEbriedad)
 	method initialize() {
 		graduacionReglamentaria.graduacionReglamentaria(10)
 	}
@@ -90,4 +90,18 @@ describe "testX" {
 		carpaGuinness.venderJarraDe_A_(4, personaBelga)
 		assert.notThat(personaBelga.estaEntrandoEnVicio())
 	}
+	test "precio carpas"{
+		personaAlemana.ingresarACarpa(carpaHofbrau)
+		carpaHofbrau.venderJarraDe_A_(1, personaAlemana)
+		assert.equals(personaAlemana.gastoTotalEnCerveza(), 97.5)
+		
+		personaBelga.ingresarACarpa(carpaGuinness)
+		carpaGuinness.venderJarraDe_A_(1, personaBelga)
+		assert.equals(personaBelga.gastoTotalEnCerveza(), 84)
+		
+		personaCheca.ingresarACarpa(carpaCorona)
+		carpaCorona.venderJarraDe_A_(1, personaCheca)
+		assert.equals(personaCheca.gastoTotalEnCerveza(), 70)
+	}
+	
 }

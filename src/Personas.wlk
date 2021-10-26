@@ -57,6 +57,12 @@ class Persona{
 	method estaEntrandoEnVicio() {
 		return self.indiceDeJarras().all{ i => jarras.get(i - 1).litro() <= jarras.get(i).litro() }
 	}
+	method gastoTotalEnCerveza(){
+		return jarras.sum{jarra => jarra.precioVendido()}
+	}
+	method jarraMasCara(){
+		return jarras.max{jarra => jarra.precioVendido()}
+	} 
 }
 
 class PersonaBelga inherits Persona{

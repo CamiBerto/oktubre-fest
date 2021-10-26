@@ -1,7 +1,7 @@
 class Marca{
 	var property lupulos
 	var property paisDeOrigen
-	
+	var property precioXLitro
 	method graduacion ()
 	
 }
